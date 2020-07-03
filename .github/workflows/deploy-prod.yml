@@ -1,13 +1,13 @@
 name: Production deployment
+
 on: 
   push:
     branches:
       - master
+
 env:
-  PACKAGES_TOKEN: ${{secrets.PACKAGES_TOKEN}}
-  AZURE_RESOURCE_GROUP: cd-with-actions
-  AZURE_APP_PLAN: actions-ttt-deployment
-  AZURE_LOCATION: '"West Europe"'
+  DOCKER_IMAGE_NAME: Mikebeem2-azure-ttt # Must not exist as a package associated with a different repo!
+  IMAGE_REGISTRY_URL: docker.pkg.github.com
   #################################################
   ### USER PROVIDED VALUES ARE REQUIRED BELOW   ###
   #################################################
@@ -15,10 +15,10 @@ env:
   ### REPLACE USERNAME WITH GH USERNAME         ###
   AZURE_WEBAPP_NAME: Mikebeem-ttt-app
   #################################################
-  
+
 jobs:
   build:
-    if: contains(github.event.pull_request.labels.*.name, 'stage')
+    if: contains(github.event.pull_request.labels.*.name, 'prod')
     
     runs-on: ubuntu-latest
 
